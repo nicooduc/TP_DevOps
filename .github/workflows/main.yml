@@ -22,4 +22,4 @@ jobs:
 
      #finally build your app with the latest command
       - name: Build and test with Maven
-        run: mvn -f ./backend_API12/pom.xml clean install
+        run: mvn -f ./backendAPI/pom.xml clean install
