@@ -2,6 +2,6 @@ FROM postgres:14.1-alpine
 
 COPY /SQL/*.sql /docker-entrypoint-initdb.d
 
-ENV POSTGRES_DB=db \
-   POSTGRES_USER=usr \
-   POSTGRES_PASSWORD=pwd
+ENV POSTGRES_DB=${{secrets.POSTGRES_DB}} \
+   POSTGRES_USER=${{secrets.POSTGRES_USER}} \
+   POSTGRES_PASSWORD=${{secrets.POSTGRES_PASSWORD}}
