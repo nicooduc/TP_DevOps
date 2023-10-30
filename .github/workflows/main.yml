@@ -34,17 +34,37 @@ jobs:
    steps:
      - name: Checkout code
        uses: actions/checkout@v2.5.0
-  
+
+     - name: Login to DockerHub
+       run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+
      - name: Build image and push backend
        uses: docker/build-push-action@v3
        with:
          # relative path to the place where source code with Dockerfile is located
          context: ./backendAPI
          # Note: tags has to be all lower-case
-         tags:  ${{secrets.DOCKERHUB_USERNAME}}/backend
+         tags:  ${{secrets.DOCKERHUB_USERNAME}}/backend:latest
+         # build on feature branches, push only on main branch
+         push: ${{ github.ref == 'refs/heads/main' }}
+
   
      - name: Build image and push database
-       uses: actions/checkout@v2.5.0
+       uses: docker/build-push-action@v3
+       with:
+         # relative path to the place where source code with Dockerfile is located
+         context: ./database
+         # Note: tags has to be all lower-case
+         tags:  ${{secrets.DOCKERHUB_USERNAME}}/database:latest
+         # build on feature branches, push only on main branch
+         push: ${{ github.ref == 'refs/heads/main' }}
   
      - name: Build image and push httpd
-       uses: actions/checkout@v2.5.0
+       uses: docker/build-push-action@v3
+       with:
+         # relative path to the place where source code with Dockerfile is located
+         context: ./httpServer
+         # Note: tags has to be all lower-case
+         tags:  ${{secrets.DOCKERHUB_USERNAME}}/frontend:latest
+         # build on feature branches, push only on main branch
+         push: ${{ github.ref == 'refs/heads/main' }}
