@@ -39,9 +39,9 @@ jobs:
        uses: docker/build-push-action@v3
        with:
          # relative path to the place where source code with Dockerfile is located
-         context: ./simple-api
+         context: ./backendAPI
          # Note: tags has to be all lower-case
-         tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-simple-api:latest
+         tags:  ${{secrets.DOCKERHUB_USERNAME}}/backend:latest
   
      - name: Build image and push database
        uses: actions/checkout@v2.5.0
