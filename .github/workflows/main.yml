@@ -1,14 +1,15 @@
-name: CI devops 2023
+name: test-backend
 on:
-  workflow_run:
-    workflows: ["*"]
-    types:
-      - requested
-
+  # Pour commencer, vous voulez lancer ce travail sur les branches main et develop
+  push:
+    branches:
+      main
+      develop
+  pull_request:
+      
 jobs:
   test-backend: 
     runs-on: ubuntu-22.04
-    if: github.event_name == 'workflow_run' && (github.event.workflow_run.event == 'pull_request' || github.event.workflow_run.event == 'push')
     steps:
      #checkout your github code using actions/checkout@v2.5.0
       - uses: actions/checkout@v2.5.0
@@ -30,8 +31,14 @@ jobs:
    needs: test-backend
    # run only when code is compiling and tests are passing
    runs-on: ubuntu-22.04
-   if: github.event_name == 'workflow_run' && github.event.workflow_run.event == 'push' && github.event.workflow_run.conclusion == 'success'
-  
+    on:
+     workflow_run:
+     workflows: ["test-backend"]
+     types: [requested]
+     branches:
+       - 'main'
+     conclusions: success
+   
    # steps to perform in job
    steps:
      - name: Checkout code
