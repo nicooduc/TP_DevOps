@@ -1,15 +1,14 @@
 name: CI devops 2023
 on:
-  #to begin you want to launch this job in main and develop
-  push:
-    branches: 
-      - main
-      - develop
-  pull_request:
+  workflow_run:
+    workflows: ["*"]
+    types:
+      - requested
 
 jobs:
   test-backend: 
     runs-on: ubuntu-22.04
+    if: github.event_name == 'workflow_run' && (github.event.workflow_run.event == 'pull_request' || github.event.workflow_run.event == 'push')
     steps:
      #checkout your github code using actions/checkout@v2.5.0
       - uses: actions/checkout@v2.5.0
@@ -31,6 +30,7 @@ jobs:
    needs: test-backend
    # run only when code is compiling and tests are passing
    runs-on: ubuntu-22.04
+   if: github.event_name == 'workflow_run' && github.event.workflow_run.event == 'push' && github.event.workflow_run.conclusion == 'success'
   
    # steps to perform in job
    steps:
@@ -41,7 +41,6 @@ jobs:
        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
 
      - name: Build image and push backend
-       if: github.ref == 'refs/heads/main'
        uses: docker/build-push-action@v3
        with:
          # relative path to the place where source code with Dockerfile is located
@@ -53,7 +52,6 @@ jobs:
 
   
      - name: Build image and push database
-       if: github.ref == 'refs/heads/main'
        uses: docker/build-push-action@v3
        with:
          # relative path to the place where source code with Dockerfile is located
@@ -64,7 +62,6 @@ jobs:
          push: ${{ github.ref == 'refs/heads/main' }}
   
      - name: Build image and push httpd
-       if: github.ref == 'refs/heads/main'
        uses: docker/build-push-action@v3
        with:
          # relative path to the place where source code with Dockerfile is located
