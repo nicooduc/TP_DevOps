@@ -1,4 +1,4 @@
-name: test-backend
+name: build-push-docker
 on:
   workflow_run:
     workflows: ["test-backend"]
