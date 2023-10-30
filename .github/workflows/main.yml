@@ -44,7 +44,7 @@ jobs:
          tags:  ${{secrets.DOCKERHUB_USERNAME}}/tp-devops-simple-api:latest
   
      - name: Build image and push database
-         # DO the same for database
+       uses: actions/checkout@v2.5.0
   
      - name: Build image and push httpd
-       # DO the same for httpd
+       uses: actions/checkout@v2.5.0
