@@ -1,11 +1,12 @@
 name: test-backend
 on:
   workflow_run:
-  workflows: ["test-backend"]
-  types: [requested]
-  branches:
-    - 'main'
-  conclusions: success
+    workflows: ["test-backend"]
+    types: 
+      - requested
+      - completed
+    branches:
+      - 'main'
       
 jobs:
   # define job to build and publish docker image
