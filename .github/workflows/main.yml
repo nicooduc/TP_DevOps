@@ -1,6 +1,6 @@
 name: test-backend
 on:
-  # Pour commencer, vous voulez lancer ce travail sur les branches main et develop
+  # Lancer ce travail sur les branches main et develop
   push:
     branches:
       main
