@@ -1,11 +1,12 @@
-name: CI devops 2023
+name: test-backend
 on:
-  #to begin you want to launch this job in main and develop
+  # Lancer ce travail sur les branches main et develop
   push:
-    branches: 
-      - main
+    branches:
+      main
+      develop
   pull_request:
-
+      
 jobs:
   test-backend: 
     runs-on: ubuntu-22.04
@@ -22,4 +23,5 @@ jobs:
 
      #finally build your app with the latest command
       - name: Build and test with Maven
-        run: mvn -f ./backendAPI/pom.xml clean install
+        #run: mvn -f ./backendAPI/pom.xml clean install
+        run : mvn -B verify sonar:sonar -Dsonar.projectKey=nicooduc_TP_DevOps -Dsonar.organization=nicooduc-devops -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file ./backendAPI/pom.xml

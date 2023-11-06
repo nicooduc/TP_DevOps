@@ -9,8 +9,8 @@ spring:
     open-in-view: true
   datasource:
     url: jdbc:postgresql://database:5432/db
-    username: ${{secrets.POSTGRES_USER}}
-    password: ${{secrets.POSTGRES_PASSWORD}}
+    username: usr
+    password: pwd
     driver-class-name: org.postgresql.Driver
 management:
  server:
