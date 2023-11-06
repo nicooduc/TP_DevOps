@@ -1,0 +1,12 @@
+---
+# tasks file for /mnt/e/EPF/5A/DevOps/TP/ansible/roles/httpd
+- name: Create a data container
+  community.docker.docker_container:
+    name: httpd
+    image: sylavana/frontend:latest
+    ports:
+      - "80:80"
+    networks:
+      - name: network_one
+  vars:
+    ansible_python_interpreter: /usr/bin/python3

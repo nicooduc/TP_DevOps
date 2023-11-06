@@ -1,0 +1,10 @@
+---
+# tasks file for /mnt/e/EPF/5A/DevOps/TP/ansible/roles/database
+- name: Create a data container
+  community.docker.docker_container:
+    name: database
+    image: sylavana/database:latest
+    networks:
+      - name: network_one
+  vars:
+    ansible_python_interpreter: /usr/bin/python3

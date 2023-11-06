@@ -1,0 +1,12 @@
+---
+# tasks file for /mnt/e/EPF/5A/DevOps/TP/ansible/roles/backend
+- name: Create a data container
+  community.docker.docker_container:
+    name: backend
+    image: sylavana/backend:latest
+    pull: true
+    recreate: true
+    networks:
+      - name: network_one
+  vars:
+    ansible_python_interpreter: /usr/bin/python3

@@ -1,0 +1,6 @@
+- name: Create a network
+  community.docker.docker_network:
+    name: network_one
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+# tasks file for /mnt/e/EPF/5A/DevOps/TP/ansible/roles/network
